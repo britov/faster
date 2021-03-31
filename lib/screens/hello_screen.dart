@@ -21,7 +21,11 @@ class HelloScreen extends StatelessWidget {
                 'Hello new user!',
                 style: TextStyle(fontSize: 34),
               ))),
-              ElevatedButton(onPressed: () {}, child: Text('Got it'))
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil('/home', (_) => false);
+                  },
+                  child: Text('Got it'))
             ],
           ),
         ),
