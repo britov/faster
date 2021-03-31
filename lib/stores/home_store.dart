@@ -7,10 +7,10 @@ import '../config.dart';
 
 class HomeStore {
 
-  final _movies = StreamController<MovieBody>();
+  final _movies = StreamController<MovieBody>.broadcast();
   Stream<MovieBody> get movies => _movies.stream;
 
-  final _video = StreamController<VideoBody>();
+  final _video = StreamController<VideoBody>.broadcast();
   Stream<VideoBody> get video => _video.stream;
 
   void dispose() {
