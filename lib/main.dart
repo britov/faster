@@ -1,4 +1,5 @@
 import 'package:faster/screens/hello_screen.dart';
+import 'package:faster/stores/home_store.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -54,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  HomeStore _store;
 
   void _incrementCounter() {
     setState(() {
@@ -66,8 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _store = HomeStore();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _store.fetchList();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
