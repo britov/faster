@@ -1,3 +1,4 @@
+import 'package:faster/screens/hello_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: HelloScreen(),
+      // home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
