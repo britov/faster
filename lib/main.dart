@@ -2,6 +2,7 @@ import 'package:faster/models/api_models.dart';
 import 'package:faster/screens/hello_screen.dart';
 import 'package:faster/stores/home_store.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   HomeStore _store;
+  YoutubePlayerController _youtubePlayerController;
 
   void _incrementCounter() {
     setState(() {
@@ -104,14 +106,47 @@ class _MyHomePageState extends State<MyHomePage> {
           if (!state.hasData) {
             return Center(child: CircularProgressIndicator());
           }
-          return ListView(
+          return Column(
             children: [
-              for (final item in state.data.results)
-              ListTile(
-                title: Text(item.title),
-                subtitle: Text(item.releaseDate),
-                trailing: Text(item.voteAverage.toString()),
-              )
+              Container(
+                color: Colors.black.withOpacity(0.1),
+                child: AspectRatio(
+                  aspectRatio: 16/9,
+                  child: StreamBuilder<VideoBody>(
+                    stream: _store.video,
+                  builder: (context, state) {
+                    if (!state.hasData) {
+                      return Center(child: Text('Select film below'));
+                    }
+                    var youtubeVideoKey = state.data.results.first?.key;
+                    if (youtubeVideoKey == null) {
+                      return Center(child: Text('No Video ;('));
+                    }
+                    if (_youtubePlayerController == null) {
+                      _youtubePlayerController = YoutubePlayerController(initialVideoId: youtubeVideoKey);
+                    } else {
+                      _youtubePlayerController.load(youtubeVideoKey);
+                    }
+                    return YoutubePlayer(
+                      controller: _youtubePlayerController,
+                    );
+                  },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    for (final item in state.data.results)
+                    ListTile(
+                      title: Text(item.title),
+                      subtitle: Text(item.releaseDate),
+                      trailing: Text(item.voteAverage.toString()),
+                      onTap: () => _store.selectMovie(item),
+                    )
+                  ],
+                ),
+              ),
             ],
           );
         },

@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:faster/models/api_models.dart';
 import 'package:http/http.dart' as http;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../config.dart';
 
 class HomeStore {
-
   final _movies = StreamController<MovieBody>.broadcast();
   Stream<MovieBody> get movies => _movies.stream;
 
