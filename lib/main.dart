@@ -75,6 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _store = HomeStore();
   }
 
+
+  @override
+  void dispose() {
+    _store.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     _store.fetchList();

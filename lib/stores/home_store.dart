@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:faster/models/api_models.dart';
@@ -6,13 +7,40 @@ import '../config.dart';
 
 class HomeStore {
 
+  final _movies = StreamController<MovieBody>();
+  Stream<MovieBody> get movies => _movies.stream;
 
-  Future<Body> fetchList() async {
+  final _video = StreamController<VideoBody>();
+  Stream<VideoBody> get video => _video.stream;
+
+  void dispose() {
+    _video.close();
+    _movies.close();
+  }
+
+  Future<MovieBody> fetchList() async {
     final result = await http.get(Uri.parse('https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ru-Ru'));
     print('result: ${result.statusCode}');
     if (result.statusCode == 200) {
       final jsonResult = json.decode(result.body);
-      final body = Body.fromJson(jsonResult);
+      final body = MovieBody.fromJson(jsonResult);
+      _movies.add(body);
+      return body;
+    }
+    return null;
+  }
+
+  Future<void> selectMovie(Movie movie) async {
+    await _getVideo(movie.id);
+  }
+
+  Future<VideoBody> _getVideo(num id) async {
+    final result = await http.get(Uri.parse('https://api.themoviedb.org/3/movie/$id/videos?api_key=$apiKey'));
+    print('result: ${result.statusCode}');
+    if (result.statusCode == 200) {
+      final jsonResult = json.decode(result.body);
+      final body = VideoBody.fromJson(jsonResult);
+      _video.add(body);
       return body;
     }
     return null;

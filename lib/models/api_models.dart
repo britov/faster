@@ -1,17 +1,17 @@
-class Body {
+class MovieBody {
   int page;
-  List<Results> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
-  Body({this.page, this.results, this.totalPages, this.totalResults});
+  MovieBody({this.page, this.results, this.totalPages, this.totalResults});
 
-  Body.fromJson(Map<String, dynamic> json) {
+  MovieBody.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
-      results = new List<Results>();
+      results = new List<Movie>();
       json['results'].forEach((v) {
-        results.add(new Results.fromJson(v));
+        results.add(new Movie.fromJson(v));
       });
     }
     totalPages = json['total_pages'];
@@ -30,7 +30,7 @@ class Body {
   }
 }
 
-class Results {
+class Movie {
   bool adult;
   String backdropPath;
   List<int> genreIds;
@@ -46,7 +46,7 @@ class Results {
   num voteAverage;
   int voteCount;
 
-  Results(
+  Movie(
       {this.adult,
         this.backdropPath,
         this.genreIds,
@@ -62,7 +62,7 @@ class Results {
         this.voteAverage,
         this.voteCount});
 
-  Results.fromJson(Map<String, dynamic> json) {
+  Movie.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     genreIds = json['genre_ids'].cast<int>();
@@ -98,3 +98,75 @@ class Results {
     return data;
   }
 }
+
+class VideoBody {
+  int id;
+  List<Video> results;
+
+  VideoBody({this.id, this.results});
+
+  VideoBody.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    if (json['results'] != null) {
+      results = new List<Video>();
+      json['results'].forEach((v) {
+        results.add(new Video.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    if (this.results != null) {
+      data['results'] = this.results.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Video {
+  String id;
+  String iso6391;
+  String iso31661;
+  String key;
+  String name;
+  String site;
+  int size;
+  String type;
+
+  Video(
+      {this.id,
+        this.iso6391,
+        this.iso31661,
+        this.key,
+        this.name,
+        this.site,
+        this.size,
+        this.type});
+
+  Video.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    iso6391 = json['iso_639_1'];
+    iso31661 = json['iso_3166_1'];
+    key = json['key'];
+    name = json['name'];
+    site = json['site'];
+    size = json['size'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['iso_639_1'] = this.iso6391;
+    data['iso_3166_1'] = this.iso31661;
+    data['key'] = this.key;
+    data['name'] = this.name;
+    data['site'] = this.site;
+    data['size'] = this.size;
+    data['type'] = this.type;
+    return data;
+  }
+}
+
