@@ -2,7 +2,7 @@ import 'package:faster/models/api_models.dart';
 import 'package:faster/screens/hello_screen.dart';
 import 'package:faster/stores/home_store.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 void main() {
   runApp(MyApp());
@@ -107,9 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
             return Center(child: CircularProgressIndicator());
           }
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 color: Colors.black.withOpacity(0.1),
+                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 2),
                 child: AspectRatio(
                   aspectRatio: 16/9,
                   child: StreamBuilder<VideoBody>(
@@ -127,8 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     } else {
                       _youtubePlayerController.load(youtubeVideoKey);
                     }
-                    return YoutubePlayer(
+                    return YoutubePlayerIFrame(
                       controller: _youtubePlayerController,
+
                     );
                   },
                   ),

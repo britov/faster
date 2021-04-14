@@ -38,7 +38,6 @@ class Movie {
   String originalLanguage;
   String originalTitle;
   String overview;
-  double popularity;
   String posterPath;
   String releaseDate;
   String title;
@@ -54,7 +53,6 @@ class Movie {
         this.originalLanguage,
         this.originalTitle,
         this.overview,
-        this.popularity,
         this.posterPath,
         this.releaseDate,
         this.title,
@@ -70,7 +68,6 @@ class Movie {
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     overview = json['overview'];
-    popularity = json['popularity'];
     posterPath = json['poster_path'];
     releaseDate = json['release_date'];
     title = json['title'];
@@ -88,7 +85,6 @@ class Movie {
     data['original_language'] = this.originalLanguage;
     data['original_title'] = this.originalTitle;
     data['overview'] = this.overview;
-    data['popularity'] = this.popularity;
     data['poster_path'] = this.posterPath;
     data['release_date'] = this.releaseDate;
     data['title'] = this.title;
